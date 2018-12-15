@@ -214,8 +214,9 @@ public class TicTacToe3DJava
             }
         };
         // diagonal on each board layer
-        if (
-                checkLayer<0,
+        if (    checkLayer.test(0, 'x') || checkLayer.test(1, 'x')|| checkLayer.test(2, 'x')|| checkLayer.test(3, 'x') ||
+                checkLayer.test(0, 'y') || checkLayer.test(1, 'y')|| checkLayer.test(2, 'y')|| checkLayer.test(3, 'y') ||
+                checkLayer.test(0, 'z') || checkLayer.test(1, 'z')|| checkLayer.test(2, 'z')|| checkLayer.test(3, 'z')
         )
             return true;
 
