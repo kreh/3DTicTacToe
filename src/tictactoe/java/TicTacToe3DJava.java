@@ -22,9 +22,12 @@ public class TicTacToe3DJava
         int totalTurns = 0,
                 totalGames = 0,
                 result = 0,
-                row, col;
+                row = 0,
+                col = 0,
+                hyt = 0;
 
-        String name, symbol, move, choice;
+        String name, symbol;
+        String move = "";
         char user1Symbol, user2Symbol;
 
         user1 = new User();
@@ -71,23 +74,24 @@ public class TicTacToe3DJava
                 if (totalTurns % 2 == 0) {
                     System.out.println("\n" + user1.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
 
-                    move = getUserMove(board);
-                    row = Integer.parseInt(move.substring(0,1)) - 1;
+                    go(board, move, row, col, hyt);
 
-                    col = getCol(move);
+                    makePlay(board, row, col, hyt, user1.getSymbol());
+
                 }
                 else {
                     System.out.println("\n" + user2.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
 
-                    move = getUserMove(board);
-                    row = Integer.parseInt(move.substring(0,1)) - 1;
+                    go(board, move, row, col, hyt);
+
+                    makePlay(board, row, col, hyt, user2.getSymbol());
                 }
-                if (checkForWin(board)) {
+                if (checkForWin()) {
                     break;
                 }
                 totalTurns++;
             }
-            if (checkForWin(board)) {
+            if (checkForWin()) {
                 System.out.print("\n" + lastWinner.getName() + " won! Would you like to play again? Y/N: ");
                 if (input.nextLine().substring(0, 1).matches("[NnQq]")) {
                     System.out.println("Goodbye!");
@@ -102,6 +106,13 @@ public class TicTacToe3DJava
                 }
             }
         }
+    }
+
+    private static void go(char[][][] board, String move, int row, int col, int hyt) {
+        move = getUserMove(board);
+        row = getRow(move);
+        col = getCol(move);
+        hyt = getHyt(move);
     }
 
     private static int getRow(String move)
@@ -146,7 +157,28 @@ public class TicTacToe3DJava
         return col;
     }
 
-    private static boolean checkForWin(char[][][] board) {
+    private static int getHyt(String move)
+    {
+        int hyt = 0;
+        switch (move.charAt(1))
+        {
+            case 'A':
+                return hyt;
+            case 'B':
+                hyt = 1;
+                break;
+            case 'C':
+                hyt = 2;
+                break;
+            case 'D':
+                hyt = 3;
+                break;
+        }
+
+        return hyt;
+    }
+
+    private static boolean checkForWin() {
         ArrayList<String> possibleWins = new ArrayList<>();
 
         boolean gameWon = false;
