@@ -67,16 +67,9 @@ public static void main(String[] args)
          move=getUserMove(board);
          row=Integer.parseInt(move.substring(0, 1))-1;
 
-            if(move.charAt(1)=='a')
-               col=0;
+            col = getCol(move);
 
-                else if(move.charAt(1)=='b')
-                   col=1;
-
-            else
-             col=2;
-
-             result=makePlay(board,row,col,user1.getSymbol());
+            result=makePlay(board,row,col,user1.getSymbol());
              printBoard(board);
 
             if(result==1)
@@ -96,16 +89,9 @@ public static void main(String[] args)
          move=getUserMove(board);
          row=Integer.parseInt(move.substring(0, 1))-1;
 
-            if(move.charAt(1)=='a')
-                col=0;
+            col = getCol(move);
 
-                else if(move.charAt(1)=='b')
-                   col=1;
-
-            else
-                col=2;
-
-                result=makePlay(board,row,col,user2.getSymbol());
+            result=makePlay(board,row,col,user2.getSymbol());
                 printBoard(board);
 
             if(result==1)
@@ -147,7 +133,21 @@ if("n".equalsIgnoreCase(choice))
  }
 }
 
-public static int makePlay(char Board[][],int r,int c,char symbol)
+    private static int  getCol(String move)
+    {
+        int col;
+        if(move.charAt(1)=='a')
+           col=0;
+
+            else if(move.charAt(1)=='b')
+               col=1;
+
+        else
+         col=2;
+        return col;
+    }
+
+    public static int makePlay(char Board[][],int r,int c,char symbol)
 {
  Board[r][c]=symbol;
  if(win(Board,r,c,symbol))
@@ -214,16 +214,9 @@ public static boolean checkOnBoard(String move,char Board[][])
 int row=Integer.parseInt(move.substring(0, 1))-1;
 int col;
 
-if(move.charAt(1)=='a')
-    col=0;
+    col = getCol(move);
 
-    else if(move.charAt(1)=='b')
-    col=1;
-
-else
-    col=2;
-
-return Board[row][col]==' ';
+    return Board[row][col]==' ';
 }
 
 public static void printBoard(char Board[][])
