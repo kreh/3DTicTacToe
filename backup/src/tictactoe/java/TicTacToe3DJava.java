@@ -6,15 +6,11 @@ Date: December 14, 2018
 
 package tictactoe.java;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class TicTacToe3DJava
 {
     public static Scanner input = new Scanner(System.in); // keyboard input
-    public static User lastWinner;
-    public static User user1;
-    public static User user2;
 
     public static void main(String[] args)
     {
@@ -27,8 +23,8 @@ public class TicTacToe3DJava
         String name, symbol, move, choice;
         char user1Symbol, user2Symbol;
 
-        user1 = new User();
-        user2 = new User();
+        User user1 = new User();
+        User user2 = new User();
 
         System.out.print("Enter User 1 name: ");
         name = input.nextLine();
@@ -36,7 +32,7 @@ public class TicTacToe3DJava
         System.out.print("Please select your symbol (O or X): ");
         symbol = input.nextLine().toUpperCase();
 
-        user1Symbol = symbol.charAt(0) == 'X' ? 'X' : 'O';
+        user1Symbol = symbol.charAt(0);
         user1.setName(name);
         user1.setSymbol(user1Symbol);
 
@@ -61,13 +57,13 @@ public class TicTacToe3DJava
                     for(int c = 0; c < 4; c++)
                         board[a][b][c] = ' ';
 
+            printBoard(board);
 
             System.out.println("\nPlayer 1: " + user1.getName() + ": " + user1.getSymbol() + "s");
             System.out.println("Player 2: " + user2.getName() + ": " + user2.getSymbol() + "s\n");
 
             while(totalTurns < 64)
             {
-                printBoard(board);
                 if (totalTurns % 2 == 0) {
                     System.out.println("\n" + user1.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
 
@@ -75,30 +71,6 @@ public class TicTacToe3DJava
                     row = Integer.parseInt(move.substring(0,1)) - 1;
 
                     col = getCol(move);
-                }
-                else {
-                    System.out.println("\n" + user2.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
-
-                    move = getUserMove(board);
-                    row = Integer.parseInt(move.substring(0,1)) - 1;
-                }
-                if (checkForWin(board)) {
-                    break;
-                }
-                totalTurns++;
-            }
-            if (checkForWin(board)) {
-                System.out.print("\n" + lastWinner.getName() + " won! Would you like to play again? Y/N: ");
-                if (input.nextLine().substring(0, 1).matches("[NnQq]")) {
-                    System.out.println("Goodbye!");
-                    break;
-                }
-            }
-            else {
-                System.out.print("\nThe game was a draw. Would you like to try again? Y/N: ");
-                if (input.nextLine().substring(0, 1).matches("[NnQq]")) {
-                    System.out.println("Goodbye!");
-                    break;
                 }
             }
         }
@@ -146,21 +118,6 @@ public class TicTacToe3DJava
         return col;
     }
 
-    private static boolean checkForWin(char[][][] board) {
-        ArrayList<String> possibleWins = new ArrayList<>();
-
-        boolean gameWon = false;
-        for (String line : possibleWins) {
-            if (line.equals("XXXX") || line.equals("OOOO"))
-            {
-                gameWon = true;
-                lastWinner = line.charAt(0) == user2.getSymbol() ? user2 : user1;
-                break;
-            }
-        }
-        return gameWon;
-    }
-
     private static String getUserMove(char[][][] board)
     {
         String move;
@@ -169,12 +126,10 @@ public class TicTacToe3DJava
             System.out.print("Enter your next move: ");
             move = input.nextLine();
             System.out.println("\n");
-            char row = move.charAt(0);
-            char col = move.charAt(1);
-            char brd = move.charAt(2);
-            if ((row=='1'||row=='2'||row=='3'||row=='4')
-             && (col=='A'||col=='B'||col=='C'||col=='D')
-             && (brd=='a'||brd=='b'||brd=='c'||brd=='d'))
+
+            if ((move.charAt(0) == '1' || move.charAt(0) == '2' || move.charAt(0) == '3')
+             && (move.charAt(1) == 'A' || move.charAt(1) == 'B' || move.charAt(1) == 'C')
+             && (move.charAt(2) == 'a' || move.charAt(2) == 'b' || move.charAt(2) == 'c'))
             {
                 if (checkOnBoard(move, board))
                     return move;
