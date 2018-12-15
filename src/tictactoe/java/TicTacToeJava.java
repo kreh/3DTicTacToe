@@ -66,7 +66,7 @@ public static void main(String[] args)
 
          move=getUserMove(board);
          row=Integer.parseInt(move.substring(0, 1))-1;
-
+            
             if(move.charAt(1)=='a')
                col=0;
 
