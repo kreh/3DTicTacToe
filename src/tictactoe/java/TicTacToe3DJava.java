@@ -7,6 +7,8 @@ Date: December 14, 2018
 package tictactoe.java;
 
 import java.util.Scanner;
+import java.util.function.BiPredicate;
+import java.util.function.IntPredicate;
 
 public class TicTacToe3DJava
 {
@@ -178,6 +180,40 @@ public class TicTacToe3DJava
     private static boolean checkDia(char[][][] board, char symbol)
     {
         TriIntPredicate checkPoint = (x, y, z) -> board[x][y][z] == symbol;
+        BiPredicate<Integer, Character> checkLayer = (index, axe) -> {
+            switch (axe) {
+                case 'x':
+                    return (
+                            checkPoint.apply(index, 0, 0) &&
+                                    checkPoint.apply(index, 1, 1) &&
+                                    checkPoint.apply(index, 2, 2) &&
+                                    checkPoint.apply(index, 3, 3)) ||
+                            (checkPoint.apply(index, 3, 0) &&
+                                    checkPoint.apply(index, 2, 1) &&
+                                    checkPoint.apply(index, 1, 2) &&
+                                    checkPoint.apply(index, 0, 3));
+                case'y':
+                    return (
+                            checkPoint.apply(0, index, 0) &&
+                                    checkPoint.apply(1, index, 1) &&
+                                    checkPoint.apply(2, index, 2) &&
+                                    checkPoint.apply(3, index, 3)) ||
+                            (checkPoint.apply(0, index, 3) &&
+                                    checkPoint.apply(1, index, 2) &&
+                                    checkPoint.apply(2, index, 1) &&
+                                    checkPoint.apply(3, index, 0));
+                case'z':
+                    return (
+                            checkPoint.apply(0, 0, index) &&
+                                    checkPoint.apply(1, 1, index) &&
+                                    checkPoint.apply(2, 2, index) &&
+                                    checkPoint.apply(3, 3, index)) ||
+                            (checkPoint.apply(0, 3, index) &&
+                                    checkPoint.apply(1, 2, index) &&
+                                    checkPoint.apply(2, 1, index) &&
+                                    checkPoint.apply(3, 0, index));
+            }
+        };
         // diagonal on each board layer
         if (
                 (checkPoint.apply(0,0,0) && checkPoint.apply(1,1,0) && checkPoint.apply(2,2,0) && checkPoint.apply(3,3,0))
