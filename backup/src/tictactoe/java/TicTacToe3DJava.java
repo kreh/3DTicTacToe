@@ -128,8 +128,8 @@ public class TicTacToe3DJava
             System.out.println("\n");
 
             if ((move.charAt(0) == '1' || move.charAt(0) == '2' || move.charAt(0) == '3')
-                    && (move.charAt(1) == 'A' || move.charAt(1) == 'B' || move.charAt(1) == 'C')
-                    && (move.charAt(2) == 'a' || move.charAt(2) == 'b' || move.charAt(2) == 'c'))
+             && (move.charAt(1) == 'A' || move.charAt(1) == 'B' || move.charAt(1) == 'C')
+             && (move.charAt(2) == 'a' || move.charAt(2) == 'b' || move.charAt(2) == 'c'))
             {
                 if (checkOnBoard(move, board))
                     return move;
