@@ -20,14 +20,10 @@ public class TicTacToe3DJava
     {
         char[][][] board = new char[4][4][4];
         char user1Symbol, user2Symbol;
-        int result;
+        int result = 0;
         int     totalTurns = 0,
-                totalGames = 0,
-                row = 0,
-                col = 0,
-                hyt = 0;
+                totalGames = 0;
         String name, symbol;
-        String move = "";
 
         user1 = new User();
         user2 = new User();
@@ -72,20 +68,18 @@ public class TicTacToe3DJava
                 printBoard(board);
                 if (totalTurns % 2 == 0) {
                     System.out.println("\n" + user1.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
-                    go(board, move, row, col, hyt);
-                    result = makePlay(board, row, col, hyt, user1.getSymbol());
+                    result = go(board, user1.getSymbol());
                 }
                 else {
                     System.out.println("\n" + user2.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
-                    go(board, move, row, col, hyt);
-                    result = makePlay(board, row, col, hyt, user2.getSymbol());
+                    result = go(board, user2.getSymbol());
                 }
-                if (checkForWin(result)) {
+                if (result == 1) {
                     break;
                 }
                 totalTurns++;
             }
-            if (checkForWin()) {
+            if (result == 1) {
                 System.out.print("\n" + lastWinner.getName() + " won! Would you like to play again? Y/N: ");
                 if (input.nextLine().substring(0, 1).matches("[NnQq]")) {
                     System.out.println("Goodbye!");
@@ -102,21 +96,12 @@ public class TicTacToe3DJava
         }
     }
 
-    private static void go(char[][][] board, String move, int col, int row, int hyt) {
-        move = getUserMove(board);
-        col = getCol(move);
-        row = getRow(move);
-        hyt = getHyt(move);
-    }
-
-    private static boolean checkForWin(int result)
-    {
-        boolean gameWon = false;
-        if (result == 1) {
-            gameWon = true;
-            lastWinner = ;
-        }
-        return gameWon;
+    private static int go(char[][][] board, char symbol) {
+        String move = getUserMove(board);
+        int col = getCol(move);
+        int row = getRow(move);
+        int hyt = getHyt(move);
+        return makePlay(board, row, col, hyt, symbol);
     }
 
     private static String getUserMove(char[][][] board)
@@ -150,14 +135,16 @@ public class TicTacToe3DJava
         int row = getRow(move);
         int col = getCol(move);
         int hyt = getHyt(move);
-        return board[row][col][hyt == ' ';
+        return board[row][col][hyt] == ' ';
     }
 
     private static int makePlay(char[][][] board, int r, int c, int h, char symbol)
     {
         board[r][c][h] = symbol;
-        if (win(board, r, c, h, symbol))
+        if (win(board, r, c, h, symbol)) {
+            lastWinner = symbol == user2.getSymbol() ? user2 : user1;
             return 1;
+        }
         else
             return 0;
     }
@@ -201,33 +188,32 @@ public class TicTacToe3DJava
 
     private static void printBoard(char[][][] board)
     {
-        int a, b, c;
+        int hyt, row, col;
         char[] smallLetters = { 'a', 'b', 'c', 'd' };
         char[] bigLetters = { 'A', 'B', 'C', 'D' };
 
-        for (a = 0; a < 4; a++) {
+        for (hyt = 0; hyt < 4; hyt++) {
 
-            System.out.print("Level " + smallLetters[a] + ":\n");
-            System.out.println("\t  " + bigLetters[0] + "\t  " + bigLetters[1] + "\t  " + bigLetters[2] + "\t  " + bigLetters[3]);
+            System.out.print("\nLevel " + smallLetters[hyt] + ":\n");
+            System.out.print("\t  " + bigLetters[0] + "\t  " + bigLetters[1] + "\t  " + bigLetters[2] + "\t  " + bigLetters[3]);
 
-            for (b = 0; b < 4; b++) {
+            for (row = 0; row < 4; row++) {
 
-                System.out.println("\t-----------------");
-                System.out.print((b + 1) + "\t|");
+                System.out.println("\n\t-----------------");
+                System.out.print((row + 1) + "\t|");
 
-                for (c = 0; c < 4; c++) {
-                    System.out.print("" + board[a][b][c] + "\t|" );
+                for (col = 0; col < 4; col++) {
+                    System.out.print(" " + board[row][col][hyt] + " |" );
                 }
-                System.out.println();
             }
-            System.out.println();
+            System.out.println("\n\t-----------------");
         }
     }
 
     private static int getCol(String move)
     {
         int col = 0;
-        switch (move.charAt(0))
+        switch (move.charAt(1))
         {
             case 'A':
                 return col;
@@ -247,23 +233,7 @@ public class TicTacToe3DJava
 
     private static int getRow(String move)
     {
-        int row = 0;
-        switch (move.charAt(1))
-        {
-            case 'A':
-                return row;
-            case 'B':
-                row = 1;
-                break;
-            case 'C':
-                row = 2;
-                break;
-            case 'D':
-                row = 3;
-                break;
-        }
-
-        return row;
+        return Integer.parseInt(move.substring(0, 1)) - 1;
     }
 
     private static int getHyt(String move)
@@ -271,15 +241,15 @@ public class TicTacToe3DJava
         int hyt = 0;
         switch (move.charAt(2))
         {
-            case 'A':
+            case 'a':
                 return hyt;
-            case 'B':
+            case 'b':
                 hyt = 1;
                 break;
-            case 'C':
+            case 'c':
                 hyt = 2;
                 break;
-            case 'D':
+            case 'd':
                 hyt = 3;
                 break;
         }
