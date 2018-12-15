@@ -1,14 +1,12 @@
+/*-----------------------------------------------------------------------------------------------
+Program: TriIntPredicatejava - this is to make typing easier than typing board[][][] == symbol
+Author: Andrilla Rahman
+Date: December 14, 2018
+ ------------------------------------------------------------------------------------------*/
+
 package tictactoe.java;
 
-/**
- * Title: COMP 1230 Assignment X:
- * File: TriIntPredicate.java
- * Description:
- *
- * @author Dave Aldrich
- * Student ID: T00593238
- * Date: December 14, 2018
- */
+
 @FunctionalInterface
 public interface TriIntPredicate
 {

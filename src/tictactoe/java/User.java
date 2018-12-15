@@ -6,59 +6,47 @@ Date: December 14, 2018
 
 package tictactoe.java;
 
-public class User {
-    
-    private String name;
-    
-private char symbol;
-private int noOfWins;
-
-public User()
+public class User
 {
-   noOfWins=0;
-}
 
-public User(String name, char symbol) {
-    
-this.name = name;
-this.symbol = symbol;
-}
+     private String name;
 
-public String getName() 
-{
-   return name;
-}
+     private char symbol;
 
-public char getSymbol() 
-{
-   return symbol;
-}
+     public User() {}
 
-public int getNoOfWins() 
-{
-   return noOfWins;
-}
+     public User(String name, char symbol)
+     {
 
-public void setName(String name) 
-{
-    this.name = name;
-}
+          this.name = name;
+          this.symbol = symbol;
+     }
 
-public void setSymbol(char symbol) 
-{
-    this.symbol = symbol;
-}
+     public String getName()
+     {
+          return name;
+     }
 
-public void userWinIncrement()
-{
-    this.noOfWins++;
-}
+     public char getSymbol()
+     {
+          return symbol;
+     }
 
-@Override
-public String toString() 
-{
-    return "Name=" + name +", Total Wins" + noOfWins ;
-}
-  
+     public void setName(String name)
+     {
+          this.name = name;
+     }
+
+     public void setSymbol(char symbol)
+     {
+          this.symbol = symbol;
+     }
+
+     @Override
+     public String toString()
+     {
+          return "Name=" + name + "\nSymbol: " + symbol;
+     }
+
 }
 
