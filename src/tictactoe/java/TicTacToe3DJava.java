@@ -6,12 +6,7 @@ Date: December 14, 2018
 
 package tictactoe.java;
 
-import javafx.geometry.Point3D;
-
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.function.IntPredicate;
-import java.util.function.Predicate;
 
 public class TicTacToe3DJava
 {
@@ -183,20 +178,24 @@ public class TicTacToe3DJava
     private static boolean checkDia(char[][][] board, char symbol)
     {
         TriIntPredicate checkPoint = (x, y, z) -> board[x][y][z] == symbol;
+        // diagonal on each board layer
         if (
-                (checkPoint.test(0, 0, 0) && board[1][1][0] == symbol && board[2][2][0] == symbol && board[3][3][0] == symbol)
-              ||(board[0][0][2] == symbol && board[1][1][2] == symbol && board[2][2][2] == symbol && board[3][3][2] == symbol)
-              ||(board[0][0][3] == symbol && board[1][1][3] == symbol && board[2][2][3] == symbol && board[3][3][3] == symbol)
-              ||(board[0][0][0] == symbol && board[1][1][1] == symbol && board[2][2][2] == symbol && board[3][3][3] == symbol)
-
-              ||(board[0][0][0] == symbol && board[1][0][1] == symbol && board[2][0][2] == symbol && board[3][0][3] == symbol)
-              ||(board[0][1][0] == symbol && board[1][1][1] == symbol && board[2][1][2] == symbol && board[3][1][3] == symbol)
-              ||(board[0][2][0] == symbol && board[1][2][1] == symbol && board[2][2][2] == symbol && board[3][2][3] == symbol)
-              ||(board[0][3][0] == symbol && board[1][3][1] == symbol && board[2][3][2] == symbol && board[3][3][3] == symbol)
+                (checkPoint.apply(0,0,0) && checkPoint.apply(1,1,0) && checkPoint.apply(2,2,0) && checkPoint.apply(3,3,0))
+              ||(checkPoint.apply(0,3,0) && checkPoint.apply(1,2,0) && checkPoint.apply(2,1,0) && checkPoint.apply(3,0,0))
+              ||(checkPoint.apply(0,0,1) && checkPoint.apply(1,1,1) && checkPoint.apply(2,2,1) && checkPoint.apply(3,3,1))
+              ||(checkPoint.apply(0,3,1) && checkPoint.apply(1,2,1) && checkPoint.apply(2,1,1) && checkPoint.apply(3,0,1))
+              ||(checkPoint.apply(0,0,2) && checkPoint.apply(1,1,2) && checkPoint.apply(2,2,2) && checkPoint.apply(3,3,2))
+              ||(checkPoint.apply(0,3,2) && checkPoint.apply(1,2,2) && checkPoint.apply(2,1,2) && checkPoint.apply(3,0,2))
+              ||(checkPoint.apply(0,0,3) && checkPoint.apply(1,1,3) && checkPoint.apply(2,2,3) && checkPoint.apply(3,3,3))
+              ||(checkPoint.apply(0,3,3) && checkPoint.apply(1,2,3) && checkPoint.apply(2,1,3) && checkPoint.apply(3,0,3))
         )
             return true;
 
-        return (board[0][3][0] == symbol && board[1][2][1] == symbol && board[2][1][2] == symbol && board[3][0][3] == symbol);
+        // diagonal from corner top layer to corner bottom layer
+        return (
+                (checkPoint.apply(0,0,0) && checkPoint.apply(1,1,1) && checkPoint.apply(2,2,2) && checkPoint.apply(3,3,3))
+              ||(checkPoint.apply(0,3,0) && checkPoint.apply(1,2,1) && checkPoint.apply(2,1,2) && checkPoint.apply(3,0,3))
+        );
     }
 
     private static void printBoard(char[][][] board)
