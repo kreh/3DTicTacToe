@@ -103,6 +103,21 @@ public class TicTacToe3DJava
         }
     }
 
+    private static boolean checkForWin(char[][][] board) {
+        ArrayList<String> possibleWins = new ArrayList<>();
+
+        boolean gameWon = false;
+        for (String line : possibleWins) {
+            if (line.equals("XXXX") || line.equals("OOOO"))
+            {
+                gameWon = true;
+                lastWinner = line.charAt(0) == user2.getSymbol() ? user2 : user1;
+                break;
+            }
+        }
+        return gameWon;
+    }
+
     private static String getUserMove(char[][][] board)
     {
         String move;
