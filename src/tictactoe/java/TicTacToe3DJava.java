@@ -65,7 +65,7 @@ public class TicTacToe3DJava
             while(totalTurns < 64)
             {
                 if (totalTurns % 2 == 0) {
-                    System.out.println("\n" + user1.getName() + ", it's your turn. [example usage: 1Bc, 4Aa");
+                    System.out.println("\n" + user1.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
 
                     move = getUserMove(board);
                     row = Integer.parseInt(move.substring(0,1)) - 1;
@@ -85,7 +85,8 @@ public class TicTacToe3DJava
             System.out.println("\n");
 
             if ((move.charAt(0) == '1' || move.charAt(0) == '2' || move.charAt(0) == '3')
-                && (move.charAt(1) == 'a' || move.charAt(1) == 'b' || move.charAt(1) == 'c'))
+             && (move.charAt(1) == 'A' || move.charAt(1) == 'B' || move.charAt(1) == 'C')
+             && (move.charAt(2) == 'a' || move.charAt(2) == 'b' || move.charAt(2) == 'c'))
             {
                 if (checkOnBoard(move, board))
                     return move;
