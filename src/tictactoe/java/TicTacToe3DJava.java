@@ -19,16 +19,15 @@ public class TicTacToe3DJava
     public static void main(String[] args)
     {
         char[][][] board = new char[4][4][4];
-        int totalTurns = 0,
+        char user1Symbol, user2Symbol;
+        int result;
+        int     totalTurns = 0,
                 totalGames = 0,
-                result = 0,
                 row = 0,
                 col = 0,
                 hyt = 0;
-
         String name, symbol;
         String move = "";
-        char user1Symbol, user2Symbol;
 
         user1 = new User();
         user2 = new User();
@@ -73,20 +72,15 @@ public class TicTacToe3DJava
                 printBoard(board);
                 if (totalTurns % 2 == 0) {
                     System.out.println("\n" + user1.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
-
                     go(board, move, row, col, hyt);
-
-                    makePlay(board, row, col, hyt, user1.getSymbol());
-
+                    result = makePlay(board, row, col, hyt, user1.getSymbol());
                 }
                 else {
                     System.out.println("\n" + user2.getName() + ", it's your turn. [example usage: 1Bc, 4Aa]");
-
                     go(board, move, row, col, hyt);
-
-                    makePlay(board, row, col, hyt, user2.getSymbol());
+                    result = makePlay(board, row, col, hyt, user2.getSymbol());
                 }
-                if (checkForWin()) {
+                if (checkForWin(result)) {
                     break;
                 }
                 totalTurns++;
@@ -108,87 +102,19 @@ public class TicTacToe3DJava
         }
     }
 
-    private static void go(char[][][] board, String move, int row, int col, int hyt) {
+    private static void go(char[][][] board, String move, int col, int row, int hyt) {
         move = getUserMove(board);
-        row = getRow(move);
         col = getCol(move);
+        row = getRow(move);
         hyt = getHyt(move);
     }
 
-    private static int getRow(String move)
+    private static boolean checkForWin(int result)
     {
-        int row = 0;
-        switch (move.charAt(1))
-        {
-            case 'A':
-                return row;
-            case 'B':
-                row = 1;
-                break;
-            case 'C':
-                row = 2;
-                break;
-            case 'D':
-                row = 3;
-                break;
-        }
-
-        return row;
-    }
-
-    private static int getCol(String move)
-    {
-        int col = 0;
-        switch (move.charAt(1))
-        {
-            case 'A':
-                return col;
-            case 'B':
-                col = 1;
-                break;
-            case 'C':
-                col = 2;
-                break;
-            case 'D':
-                col = 3;
-                break;
-        }
-
-        return col;
-    }
-
-    private static int getHyt(String move)
-    {
-        int hyt = 0;
-        switch (move.charAt(1))
-        {
-            case 'A':
-                return hyt;
-            case 'B':
-                hyt = 1;
-                break;
-            case 'C':
-                hyt = 2;
-                break;
-            case 'D':
-                hyt = 3;
-                break;
-        }
-
-        return hyt;
-    }
-
-    private static boolean checkForWin() {
-        ArrayList<String> possibleWins = new ArrayList<>();
-
         boolean gameWon = false;
-        for (String line : possibleWins) {
-            if (line.equals("XXXX") || line.equals("OOOO"))
-            {
-                gameWon = true;
-                lastWinner = line.charAt(0) == user2.getSymbol() ? user2 : user1;
-                break;
-            }
+        if (result == 1) {
+            gameWon = true;
+            lastWinner = ;
         }
         return gameWon;
     }
@@ -201,6 +127,7 @@ public class TicTacToe3DJava
             System.out.print("Enter your next move: ");
             move = input.nextLine();
             System.out.println("\n");
+
             char row = move.charAt(0);
             char col = move.charAt(1);
             char brd = move.charAt(2);
@@ -220,41 +147,10 @@ public class TicTacToe3DJava
 
     private static boolean checkOnBoard(String move, char[][][] board)
     {
-        int row = Integer.parseInt(move.substring(0,1)) - 1;
-        int col = 0;
-        int height = 0;
-
-        switch (move.charAt(1)) {
-            case 'A':
-                col = 0;
-                break;
-            case 'B':
-                col = 1;
-                break;
-            case 'C':
-                col = 2;
-                break;
-            case 'D':
-                col = 3;
-                break;
-        }
-
-        switch (move.charAt(2)) {
-            case 'a':
-                height = 0;
-                break;
-            case 'b':
-                height = 1;
-                break;
-            case 'c':
-                height = 2;
-                break;
-            case 'd':
-                height = 3;
-                break;
-        }
-
-        return board[row][col][height] == ' ';
+        int row = getRow(move);
+        int col = getCol(move);
+        int hyt = getHyt(move);
+        return board[row][col][hyt == ' ';
     }
 
     private static int makePlay(char[][][] board, int r, int c, int h, char symbol)
@@ -266,11 +162,11 @@ public class TicTacToe3DJava
             return 0;
     }
 
-    private static boolean win(char[][][] board, int row, int col, int height, char symbol)
+    private static boolean win(char[][][] board, int row, int col, int hyt, char symbol)
     {
-        if (checkRow(board, row, height, symbol ))
+        if (checkRow(board, row, hyt, symbol ))
             return true;
-        else if (checkCol(board, col, height, symbol))
+        else if (checkCol(board, col, hyt, symbol))
             return true;
         else if (checkHeight(board, row, col, symbol))
             return true;
@@ -326,5 +222,68 @@ public class TicTacToe3DJava
             }
             System.out.println();
         }
+    }
+
+    private static int getCol(String move)
+    {
+        int col = 0;
+        switch (move.charAt(0))
+        {
+            case 'A':
+                return col;
+            case 'B':
+                col = 1;
+                break;
+            case 'C':
+                col = 2;
+                break;
+            case 'D':
+                col = 3;
+                break;
+        }
+
+        return col;
+    }
+
+    private static int getRow(String move)
+    {
+        int row = 0;
+        switch (move.charAt(1))
+        {
+            case 'A':
+                return row;
+            case 'B':
+                row = 1;
+                break;
+            case 'C':
+                row = 2;
+                break;
+            case 'D':
+                row = 3;
+                break;
+        }
+
+        return row;
+    }
+
+    private static int getHyt(String move)
+    {
+        int hyt = 0;
+        switch (move.charAt(2))
+        {
+            case 'A':
+                return hyt;
+            case 'B':
+                hyt = 1;
+                break;
+            case 'C':
+                hyt = 2;
+                break;
+            case 'D':
+                hyt = 3;
+                break;
+        }
+
+        return hyt;
     }
 }
