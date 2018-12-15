@@ -6,8 +6,12 @@ Date: December 14, 2018
 
 package tictactoe.java;
 
+import javafx.geometry.Point3D;
+
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.function.IntPredicate;
+import java.util.function.Predicate;
 
 public class TicTacToe3DJava
 {
@@ -178,8 +182,17 @@ public class TicTacToe3DJava
 
     private static boolean checkDia(char[][][] board, char symbol)
     {
+        TriIntPredicate checkPoint = (x, y, z) -> board[x][y][z] == symbol;
         if (
-                board[0][0][0] == symbol && board[1][1][1] == symbol && board[2][2][2] == symbol && board[3][3][3] == symbol
+                (checkPoint.test(0, 0, 0) && board[1][1][0] == symbol && board[2][2][0] == symbol && board[3][3][0] == symbol)
+              ||(board[0][0][2] == symbol && board[1][1][2] == symbol && board[2][2][2] == symbol && board[3][3][2] == symbol)
+              ||(board[0][0][3] == symbol && board[1][1][3] == symbol && board[2][2][3] == symbol && board[3][3][3] == symbol)
+              ||(board[0][0][0] == symbol && board[1][1][1] == symbol && board[2][2][2] == symbol && board[3][3][3] == symbol)
+
+              ||(board[0][0][0] == symbol && board[1][0][1] == symbol && board[2][0][2] == symbol && board[3][0][3] == symbol)
+              ||(board[0][1][0] == symbol && board[1][1][1] == symbol && board[2][1][2] == symbol && board[3][1][3] == symbol)
+              ||(board[0][2][0] == symbol && board[1][2][1] == symbol && board[2][2][2] == symbol && board[3][2][3] == symbol)
+              ||(board[0][3][0] == symbol && board[1][3][1] == symbol && board[2][3][2] == symbol && board[3][3][3] == symbol)
         )
             return true;
 
