@@ -191,7 +191,7 @@ public class TicTacToe3DJava
                                     checkPoint.apply(index, 2, 1) &&
                                     checkPoint.apply(index, 1, 2) &&
                                     checkPoint.apply(index, 0, 3));
-                case'y':
+                case 'y':
                     return (        checkPoint.apply(0, index, 0) &&
                                     checkPoint.apply(1, index, 1) &&
                                     checkPoint.apply(2, index, 2) &&
@@ -200,7 +200,7 @@ public class TicTacToe3DJava
                                     checkPoint.apply(1, index, 2) &&
                                     checkPoint.apply(2, index, 1) &&
                                     checkPoint.apply(3, index, 0));
-                case'z':
+                case 'z':
                     return (        checkPoint.apply(0, 0, index) &&
                                     checkPoint.apply(1, 1, index) &&
                                     checkPoint.apply(2, 2, index) &&
@@ -215,7 +215,10 @@ public class TicTacToe3DJava
         };
         // diagonal on each board layer
         if (
-                checkLayer<0,
+                checkLayer.test(0, 'x') checkLayer.test(0, 'y'); checkLayer.test(0, 'z');
+                checkLayer.test(1, 'x'); checkLayer.test(0, 'y'); checkLayer.test(0, 'z');
+                checkLayer.test(2, 'x'); checkLayer.test(0, 'y'); checkLayer.test(0, 'z');
+                checkLayer.test(3, 'x'); checkLayer.test(0, 'y'); checkLayer.test(0, 'z');
         )
             return true;
 
